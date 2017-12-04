@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47 (45396) - http://www.bohemiancoding.com/sketch -->
+    <title>telegram</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Daratus-1" transform="translate(-865.000000, -509.000000)">
+            <g id="telegram" transform="translate(865.000000, 509.000000)">
+                <circle id="Oval-1-Copy-58" fill="#ADB8CC" cx="14" cy="14" r="14"></circle>
+                <path d="M11.9636364,21.5090909 C11.4672727,21.5090909 11.5563636,21.3181818 11.3781818,20.8472727 L9.92727273,16.0618182 L18.9381818,10.4363636 L19.9945455,10.7163636 L19.1163636,13.1090909 L11.9636364,21.5090909 L11.9636364,21.5090909 Z" id="path2993" fill="#FFFFFF"></path>
+                <path d="M12.2181818,16.4145455 L18.3781818,20.9581818 C19.0781818,21.34 19.5872727,21.1490909 19.7654545,20.3090909 L22.2727273,8.49818182 C22.5272727,7.46727273 21.8781818,7.00909091 21.2036364,7.31454545 L6.49090909,12.9909091 C5.48545455,13.3981818 5.49818182,13.9581818 6.31272727,14.2 L10.0927273,15.3836364 L18.8363636,9.87272727 C19.2436364,9.61818182 19.6254545,9.75818182 19.32,10.0381818 L12.2181818,16.4145455 L12.2181818,16.4145455 Z" id="path2991" fill="#FFFFFF"></path>
+            </g>
+        </g>
+    </g>
+</svg>

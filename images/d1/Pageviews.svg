@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="12px" viewBox="0 0 18 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47 (45396) - http://www.bohemiancoding.com/sketch -->
+    <title>Pageviews</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Daratus-1" transform="translate(-1190.000000, -728.000000)" stroke="#9E46F6">
+            <g id="Pageviews" transform="translate(1191.000000, 729.000000)">
+                <path d="M8,10 C10.9455187,10 13.6121853,8.33333333 16,5 C13.6121853,1.66666667 10.9455187,0 8,0 C5.05448133,0 2.38781467,1.66666667 0,5 C2.38781467,8.33333333 5.05448133,10 8,10 Z" id="Oval-2"></path>
+                <path d="M8,2 C6.34314575,2 5,3.34314575 5,5 C5,6.65685425 6.34314575,8 8,8 L8,8 C9.65685425,8 11,6.65685425 11,5 C11,4.32349013 10.7760749,3.69928077 10.3983007,3.19744794" id="Oval-3" stroke-linecap="round" stroke-linejoin="round"></path>
+            </g>
+        </g>
+    </g>
+</svg>

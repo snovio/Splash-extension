@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Daratus Extension</title>
+	<link href="https://fonts.googleapis.com/css?family=Rubik:400,500,700" rel="stylesheet">
+
+	<script src="libs/jquery-3.2.1.min.js"></script>
+	<script src="js/functions.js"></script>
+	<script src="js/popup.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+	<div id="wrapper" class="flexCols">
+		<div id="header" class="row">
+			<div class="verCenter logo"></div>
+		</div>
+		<div id="content" class="row flex1">
+			<div id="contWrap">
+				<div id="dataScreen" class="">
+
+					<!-- TRADING DATA -->
+					<div id="trading" class="nodisplay">
+						<div id="dataTop" class="row">
+							<div class="leftSide col">
+								<div id="domain">
+									<div id="domain_logo" class="domain_logo"></div>
+									<div id="domain_info">
+										<div id="domain_name" class="fw500 fs14">
+											<span class="name"></span> <span class="symbol cGray"></span>
+										</div>
+										<div id="domain_prices" class="fw400 fs10">
+											<p class=""><span class="usd"></span>&nbsp;<span class="usdProc cGreen"></span></p>
+											<p class=""><span class="btc"></span><!-- &nbsp;<span class="btcProc cGreen"></span> --></p>
+										</div>
+									</div>
+								</div>
+								<div class="description" class="fw500 fs10"></div>
+								<div id="rank" class="box">
+									<div class="ml15 fs10 fw400">CoinMarketCap rank</div>
+									<div class="number mr15 fs12 fw700"></div>
+								</div>
+								<div id="worth" class="box">
+									<div class="flex1 textAlignC">
+										<div id="market_cap" class="verCenter">
+											<p class="mb7">Market Cap</p>
+											<p class="usd fw500 fs12 mb3"></p>
+											<p class="btc fs8 cGray mb3"></p>
+											<p class="eth fs8 cGray"></p>
+										</div>
+									</div>
+									<div class="vert_separator"></div>
+									<div class="flex1 textAlignC">
+										<div id="volume" class="verCenter">
+											<p class="mb7">Volume (24H)</p>
+											<p class="usd fw500 fs12 mb3"></p>
+											<p class="btc fs8 cGray mb3"></p>
+											<p class="eth fs8 cGray"></p>
+										</div>
+									</div>
+								</div>
+								<div class="social">
+								</div> 
+							</div>
+							<div id="price_action" class="rightSide col flexCols">
+								<div class="title">
+									<div class="main_title fs10 fw500 cGray">PRICE ACTION</div>
+								</div>
+								<div class="graphCont">
+									<div id="prize_action_graph">
+										<div id="hourGraph" class="fullSize"></div>
+										<div id="dayGraph" class="nodisplay fullSize"></div>
+										<div id="weekGraph" class="nodisplay fullSize"></div>
+										<div id="monthGraph" class="nodisplay fullSize"></div>
+										<div id="3monthGraph" class="nodisplay fullSize"></div>
+									</div>
+									<div id="graph_controls">
+										<div id="hour" class="time_tab flex1">1 H</div>
+										<div class="sep"></div>
+										<div id="day" class="time_tab flex1">1 D</div>
+										<div class="sep"></div>
+										<div id="week" class="time_tab flex1">1 Wk</div>
+										<div class="sep"></div>
+										<div id="month" class="time_tab flex1">1 Mo</div>
+										<div class="sep"></div>
+										<div id="3month" class="time_tab flex1">3 Mo</div>
+									</div>
+								</div>
+								<div id="price_action_list" class="flexCols">
+									<div id="start_price" class="info_line flexRows">
+										<div class="name list_text">Start price</div><div class="value list_value"></div>
+									</div>
+									<div id="funds_raised" class="info_line flexRows">
+										<div class="name list_text">Funds raised</div><div class="value list_value"></div>
+									</div>
+									<div id="token_sale_end_date" class="info_line flexRows">
+										<div class="name list_text">Token sale end date</div><div class="value list_value"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- ICO DATA -->
+					<div id="ico" class="nodisplay"><div id="dataTop" class="row">
+							<div class="leftSide col"> 
+								<div id="domain">
+									<div id="domain_logo" class="domain_logo"></div>
+									<div id="domain_info">
+										<div id="domain_name" class="fw500 fs14 fixName">
+											<span><span class="name"></span> <span class="symbol cGray"></span></span>
+										</div>
+									</div>
+								</div>
+								<div class="description" class="fw500 fs10"></div>
+								<div id="saleDates" class="box flexRows">
+									<div class="flex1 textAlignC">
+										<div id="sale_starts" class="verCenter">
+											<p class="mb7">Token sale starts</p>
+											<p class="date fw500 fs12 mb3"></p>
+											<p class="date_text fs8 cGray"></p>
+										</div>
+									</div>
+									<div class="vert_separator"></div>
+									<div class="flex1 textAlignC">
+										<div id="sale_ends" class="verCenter">
+											<p class="mb7">Token sale ends</p>
+											<p class="date fw500 fs12 mb3"></p>
+											<p class="date_text fs8 cGray"></p>
+										</div>
+									</div>
+								</div>
+								<!-- <div id="price_action_list" class="flexCols"> -->
+								<div id="telegram_members" class="info_line flexRows">
+									<div class="name list_text">Telegram members</div><div class="value list_value"></div>
+								</div>
+								<div id="twitter_followers" class="info_line flexRows">
+									<div class="name list_text">Twitter followers</div><div class="value list_value"></div>
+								</div>
+								<div class="social">
+								</div> 
+
+							</div>
+							<div id="ratings" class="rightSide col flexCols">
+								<div class="title">
+									<div class="main_title fs10 fw500 cGray">RATINGS</div>
+								</div>
+								
+								<div class="ratings_info flexCols" style="height:252px">
+									<div id="ico_rating" class="details_bar flexCols">
+										<div class="info flexRows mb4 algElVertC">
+											<div class="flex algElVertC">
+												<div class="value list_value mr10 rateVal">3.9</div>
+												<div class="name list_text">ICO Rating</div>
+											</div>
+											<div class="details_text"><a>Details</a></div>
+										</div>
+										<div class="bar"><div class="activeBar aBarC1"></div></div>
+									</div>
+									<div id="ico_critic" class="details_bar flexCols">
+										<div class="info flexRows mb4 algElVertC">
+											<div class="flex algElVertC">
+												<div class="value list_value mr10 rateVal">3.9</div>
+												<div class="name list_text">ICO Critic</div>
+											</div>
+											<div class="details_text"><a>Details</a></div>
+										</div>
+										<div class="bar"><div class="activeBar aBarC2"></div></div>
+									</div>
+									<div id="ico_bench" class="details_bar flexCols">
+										<div class="info flexRows mb4 algElVertC">
+											<div class="flex algElVertC">
+												<div class="value list_value mr10 rateVal">3.9</div>
+												<div class="name list_text">ICO Bench</div>
+											</div>
+											<div class="details_text"><a>Details</a></div>
+										</div>
+										<div class="bar"><div class="activeBar aBarC3"></div></div>
+									</div>
+									<div id="cryptorated" class="details_bar flexCols">
+										<div class="info flexRows mb4 algElVertC">
+											<div class="flex algElVertC">
+												<div class="value list_value mr10 rateVal">3.9</div>
+												<div class="name list_text">Cryptorated</div>
+											</div>
+											<div class="details_text"><a>Details</a></div>
+										</div>
+										<div class="bar"><div class="activeBar aBarC4"></div></div>
+									</div>
+									<div id="ico_bazaar" class="details_bar flexCols">
+										<div class="info flexRows mb4 algElVertC">
+											<div class="flex algElVertC">
+												<div class="value list_value mr10 rateVal">3.9</div>
+												<div class="name list_text">ICO Bazaar</div>
+											</div>
+											<div class="details_text"><a>Details</a></div>
+										</div>
+										<div class="bar"><div class="activeBar aBarC5"></div></div>
+									</div>
+									<div id="token_tops" class="details_bar flexCols">
+										<div class="info flexRows mb4 algElVertC">
+											<div class="flex algElVertC">
+												<div class="value list_value mr10 rateVal">3.9</div>
+												<div class="name list_text">Token Tops</div>
+											</div>
+											<div class="details_text"><a>Details</a></div>
+										</div>
+										<div class="bar"><div class="activeBar aBarC6"></div></div>
+									</div>
+									<div id="digrate" class="details_bar flexCols">
+										<div class="info flexRows mb4 algElVertC">
+											<div class="flex algElVertC">
+												<div class="value list_value mr10 rateVal">3.9</div>
+												<div class="name list_text">Digrate</div>
+											</div>
+											<div class="details_text"><a>Details</a></div>
+										</div>
+										<div class="bar"><div class="activeBar aBarC7"></div></div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+					<!-- BOTTOM DATA -->
+
+					<div class="separator" class="row"></div>
+					<div id="dataBottom" class="row">
+						<div class="col flexCols">
+							<div class="title">
+								<div class="main_title fs10 fw500 cGray mb3">Website traffic</div>
+								<div class="second_title fs8 cGray">Monthly visits</div>
+							</div>
+							<div id="web_traffic_graph">
+								<iframe class="graph_iframe noEvents" src=""></iframe>
+							</div>
+						</div>
+					</div>
+					<div id="loader">
+						<p>LOADING</p>
+					</div>
+				</div>
+			</div>
+			<div id="errorMsg">
+			</div>
+		</div>
+		<div id="bottom" class="row">
+			<div class="verCenter fs9">
+				<!-- <a href="https://www.daratus.com/">Some words about Daratus that link to www.daratus.com</a> -->
+			</div>
+		</div>
+	</div>
+
+	
+</body>
+</html>
