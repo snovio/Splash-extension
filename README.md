@@ -1,4 +1,4 @@
-# ico-extention
+# Token-extention
 Chrome extention for geting crypto project data in one place
 
 For upcoming ICO projects
