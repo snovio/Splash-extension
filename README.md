@@ -1,5 +1,5 @@
 # ico-extention
-Chrome extention for geting ICO project data in one place
+Chrome extention for geting crypto project data in one place
 
 For upcoming ICO projects
 1. Project name and ticker of the coin
