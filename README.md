@@ -30,7 +30,7 @@ For projects with tradable coins
 15. Website statistics and analytics for the last month
 
 
-Installation.
+# Installation.
 1. Clone extention source code or download it as zip https://github.com/daratus/ico-extention/archive/master.zip 
 2. In cases of zip extact it.
 3. If you are a code master review source code and feel free to improve it :) 
