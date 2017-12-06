@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
 
-  "name": "Crypto Project",
-  "description": "Productivity tool to get all the essential information about crypto project in a single click.",
-  "version": "0.0.0.7",
+  "name": "Daratus Splash",
+  "description": "Productivity tool to get all the essential information about crypto projects in a single click.",
+  "version": "0.0.0.16",
   "icons": {
     "128": "images/icon_128.png",
     "48": "images/icon_48.png",
@@ -12,12 +12,12 @@
 
   "browser_action": {
     "default_popup": "popup.html",
-    "default_title": "Crypto Project"
+    "default_title": "Daratus Splash"
   },
   "permissions": [
     "activeTab",
     "tabs",
     "storage",
-    "http://mvp.daratus.com/"
+    "http://*.daratus.com/"
   ]
 }
