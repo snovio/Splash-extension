@@ -186,10 +186,6 @@ function thousands(number){
 function fixed(number, amm){
     console.log("fixed", number);
     if(number != null){
-        // var intNumb = parseInt(number);
-        // console.log(intNumb);
-        // if (intNumb === parseInt(intNumb, 10)){
-
         if( !isNaN(parseFloat(number)) && isFinite(number) ){ // if ist number
             // console.log("ans", intNumb.toFixed(amm));
             // console.log(number);

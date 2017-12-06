@@ -1,7 +1,8 @@
 
 var extension = {
 	id: 0,
-	domain: ''
+	domain: '',
+	selected: ''
 }
 var apiLink = 'http://mvp.daratus.com/ico-extention/index.php?link=';
 var graphUrl = 'https://widget.similarweb.com/traffic/';
@@ -15,15 +16,12 @@ var graphInitData = [
 ]
 
 
-function init( rootDomain ){
+function init( rootDomain, selectedText ){
 	// get extension id
-	getExtensionId();
-
-	// get current domain
 	extension.domain = rootDomain;
-
-	// start data load
-	getDomainData( rootDomain );
+	extension.selected = selectedText;
+	console.log(extension.selected);
+	getExtensionId();
 }
 
 function getExtensionId(){
@@ -44,18 +42,21 @@ function getExtensionId(){
 	    	console.log("extension id:", items.id);
 	    	extension.id = items.id;
 	    }
+
+	    getDomainData(extension.domain);
 	});
 }
 
 function initExtension( data ){
 	// console.log(data);
 
-	if ( data.hasOwnProperty("baseInfo") ){
+	// if ( data.hasOwnProperty("baseInfo") ){
+	if ( data.error == null ){
 		// unhide("#dataScreen");
 
 		appendSocialIcons(data.baseInfo.status);
 		addSocialLinks(data.social);
-		showBottomData(data.traffic, data.additionalInfo);
+		showBottomGraph(data.traffic);
 
 		if(data.baseInfo.status == "ICO"){
 			showICO(data.baseInfo, data.icoRating, data.social);
@@ -70,22 +71,27 @@ function initExtension( data ){
 		}
 
 		addMouseEvents();
-		activateExtensionLinks();
+		// activateExtensionLinks();
+		// sendEmail('lalala@ada.com');
+		// sendEmail('lalala@ada.com')
 	} else {
 		console.log("er");
-		$("#errorMsg").html(data.error);
-		$("#dataScreen").css("display", "none");
+		$("#errorMsg > #fromJSON").html(data.error);
+		// $("#dataScreen").css("display", "none");
+		$("#contWrap").css("display", "none");
 		$("#errorMsg").css("display", "block");
 	}
 
+	showBottomLink(data.additionalInfo);
+	activateExtensionLinks();
 	
+	// hide loader
 	$( "#loader" ).animate({
 	    opacity: 0.0
 	}, 550, function() {
 	    $("#loader").addClass("noEvents");
 	});
 }
-
 
 
 function addSocialLinks(social){
@@ -148,12 +154,14 @@ function showICO(baseInfo, icoRating, social){
 	// console.log(icoRating);
 
 	$("#ico_rating > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.icorating, 2), "-") );
-	$("#ico_critic > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.icocritic, 2), "-") );
+	// $("#ico_critic > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.icocritic, 2), "-") );
 	$("#ico_bench > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.icobench, 2), "-") );
-	$("#cryptorated > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.cryptorated, 2), "-") );
+	// $("#cryptorated > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.cryptorated, 2), "-") );
 	$("#ico_bazaar > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.icobazaar, 2), "-") );
 	$("#token_tops > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.tokentops, 2), "-") );
+	$("#fox_ico > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.foxIco, 2), "-") );
 	$("#digrate > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.digrate, 2), "-") );
+	$("#ico_drops > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.icodrops, 2), "-") );
 
 	// ratingSameWidth();
 	setTimeout(ratingSameWidth, 10);
@@ -161,21 +169,26 @@ function showICO(baseInfo, icoRating, social){
 	var total = 100/5; //  100 proc / 5 balu sistema
 	// console.log( icoRating.icobazaar );
 	// console.log( ifNoInt(icoRating.icobazaar*total, 0)+"%" );
+
 	$("#ico_rating > .bar > .activeBar").css( "width", (ifNoInt(icoRating.icorating, 0))*total+"%" );
-	$("#ico_critic > .bar > .activeBar").css( "width", (ifNoInt(icoRating.icocritic*total, 0))+"%" );
+	// $("#ico_critic > .bar > .activeBar").css( "width", (ifNoInt(icoRating.icocritic*total, 0))+"%" );
 	$("#ico_bench > .bar > .activeBar").css( "width", (ifNoInt(icoRating.icobench*total, 0))+"%" );
-	$("#cryptorated > .bar > .activeBar").css( "width", (ifNoInt(icoRating.cryptorated*total, 0))+"%" );
+	// $("#cryptorated > .bar > .activeBar").css( "width", (ifNoInt(icoRating.cryptorated*total, 0))+"%" );
 	$("#ico_bazaar > .bar > .activeBar").css( "width", (ifNoInt(icoRating.icobazaar*total, 0))+"%" );
 	$("#token_tops > .bar > .activeBar").css( "width", (ifNoInt(icoRating.tokentops*total, 0))+"%" );
+	$("#fox_ico > .bar > .activeBar").css( "width", (ifNoInt(icoRating.foxIco*total, 0))+"%" );
 	$("#digrate > .bar > .activeBar").css( "width", (ifNoInt(icoRating.digrate*total, 0))+"%" );
+	$("#ico_drops > .bar > .activeBar").css( "width", (ifNoInt(icoRating.icodrops*total, 0))+"%" );
 
 	addDetailsBtnLink("#ico_rating > .info > .details_text", icoRating.icoratingLink);
-	addDetailsBtnLink("#ico_critic > .info > .details_text", icoRating.icocriticLink);
+	// addDetailsBtnLink("#ico_critic > .info > .details_text", icoRating.icocriticLink);
 	addDetailsBtnLink("#ico_bench > .info > .details_text", icoRating.icobenchLink);
-	addDetailsBtnLink("#cryptorated > .info > .details_text", icoRating.cryptoratedLink);
+	// addDetailsBtnLink("#cryptorated > .info > .details_text", icoRating.cryptoratedLink);
 	addDetailsBtnLink("#ico_bazaar > .info > .details_text", icoRating.icobazaarLink);
 	addDetailsBtnLink("#token_tops > .info > .details_text", icoRating.tokentopsLink);
+	addDetailsBtnLink("#fox_ico > .info > .details_text", icoRating.foxIcoLink);
 	addDetailsBtnLink("#digrate > .info > .details_text", icoRating.digrateLink);
+	addDetailsBtnLink("#ico_drops > .info > .details_text", icoRating.icodropsLink);
 
 }
 
@@ -236,7 +249,7 @@ function showTrading(baseInfo, coinMarket){
 	$("#token_sale_end_date > .value").html( ifNull(baseInfo.tokenSaleEndDate, "n/a") );
 }
 
-function showBottomData(traffic, additionalInfo){
+function showBottomGraph(traffic){
 	$( ".graph_iframe" ).attr("src", graphUrl+extension.domain )
 
 	// $("#estimated_visits > .value").html( traffic.TotalVisits );
@@ -244,6 +257,9 @@ function showBottomData(traffic, additionalInfo){
 	// $("#page_views > .value").html( traffic.PagesViews );
 	// $("#bounce_rate > .value").html( traffic.BounceRate );
 
+}
+
+function showBottomLink(additionalInfo){
 	$("#bottom > div").append( additionalInfo.html );
 }
 
@@ -254,16 +270,24 @@ function unhide(id){
 
 function activateExtensionLinks(){
 	window.addEventListener('click',function(e){
-		// console.log(e, this);
-		if(e.target.href!==undefined){
-			// console.log("url", e.target.href)
-			chrome.tabs.create({url:e.target.href})
+		if( ($(e.target).attr('mailto') != null) && ($(e.target).attr('mailto') != undefined) ){
+			sendEmail( $(e.target).attr('mailto') );
+		} else if(e.target.href!==undefined){
+			chrome.tabs.create({url:e.target.href});
 		} else if ( jQuery.inArray("time_tab", e.target.classList) >= 0 ) {
 			$( ".time_tab" ).removeClass( "active_time_tab" )
 			$( e.target ).addClass( "active_time_tab" )
 			priceActionGraph(e.target.id);
 		}
 	})
+}
+
+
+function sendEmail(emailUrl) {
+	var emailUrl = "mailto:"+emailUrl;
+    chrome.tabs.update({
+        url: emailUrl
+    });
 }
 
 
@@ -496,8 +520,14 @@ function priceActionGraph(type){
 
 // ajax
 function getDomainData( rootDomain ){
+	var params = {id:extension.id, selectedText:extension.selected};
+	var paramsUrl = $.param( params );
+
+	var url = apiLink+"http://"+rootDomain+"?"+paramsUrl;
+	// console.log(url);
+
 	$.ajax({
-	    url: apiLink+"http://"+rootDomain+"?id="+extension.id,
+	    url: url,
 	    // data: { id: extension.id },
 	    type: "POST",
 	    dataType: 'json',
@@ -512,7 +542,15 @@ function getDomainData( rootDomain ){
 
 // on document ready
 $(function() {
-	chrome.tabs.getSelected(null, function(tab) { 
-		init( extractRootDomain(tab.url) );
-	});    
+	// get selected text
+	chrome.tabs.executeScript( { code: "window.getSelection().toString();" }, function(selection) {
+	  	// selection[0]
+	  	chrome.tabs.getSelected(null, function(tab) {
+	  		var selectedText = selection[0];
+	  		if( selection[0].length > 50 ) selectedText = '';
+			init( extractRootDomain(tab.url), selectedText );
+		});    
+	});
+
+	
 });
