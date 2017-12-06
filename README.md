@@ -1,5 +1,5 @@
-# Token-extention
-Chrome extention for geting crypto project data in one place
+# Token-extension
+Chrome extension for geting crypto project data in one place
 
 For upcoming ICO projects
 1. Project name and ticker of the coin
@@ -31,11 +31,11 @@ For projects with tradable coins
 
 
 # Installation.
-1. Clone extention source code or download it as zip https://github.com/daratus/ico-extention/archive/master.zip 
+1. Clone extension source code or download it as zip https://github.com/daratus/Splash-extension/archive/master.zip
 2. In cases of zip extact it.
 3. If you are a code master review source code and feel free to improve it :) 
-4. Navigate to Menu --> More Tools --> Extentions
+4. Navigate to Menu --> More Tools --> Extensions
   a) Enable Developer Mode
-  b) Press "Load Unpacked Extention..." navigate to extention folder and load extention.
-5. Extention icon appears in upper right conner  
-6. Enjoy while exploring all crypto project with out leaving current web site.
+  b) Press "Load Unpacked Extension..." navigate to extension folder and load extension.
+5. Extension icon appears in upper right conner  
+6. Enjoy while exploring all crypto project without leaving the current website.
