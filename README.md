@@ -32,7 +32,7 @@ For projects with tradable coins
 
 # Installation.
 1. Clone extension source code or download it as zip https://github.com/daratus/Splash-extension/archive/master.zip
-2. In cases of zip extact it.
+2. In cases of zip, extact it.
 3. If you are a code master review source code and feel free to improve it :) 
 4. Navigate to Menu --> More Tools --> Extensions
   a) Enable Developer Mode
