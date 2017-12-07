@@ -15,6 +15,32 @@ var graphInitData = [
 	{btnID: "3month", container:"3monthGraph", dataName:"histo3months", timeText:"LAST 3 MONTH", data:{xGridAmm:7}, smoothAmm: 0, type: "other"}
 ]
 
+// Google analytics
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-103789418-2']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = 'https://ssl.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+
+function addButtonTracking(){
+	// Price action graph
+	track("#hour", "price_graph_hour");
+	track("#day", "price_graph_day");
+	track("#week", "price_graph_week");
+	track("#month", "price_graph_month");
+	track("#3month", "price_graph_3month");	
+}
+
+function track(elementName, eventName){
+	$( elementName ).click( function(){
+		_gaq.push(['_trackEvent', eventName, 'clicked']);
+	});	
+}
+
 
 function init( rootDomain, selectedText ){
 	// get extension id
@@ -73,8 +99,6 @@ function initExtension( data ){
 
 		addMouseEvents();
 		// activateExtensionLinks();
-		// sendEmail('lalala@ada.com');
-		// sendEmail('lalala@ada.com')
 	} else {
 		console.log("er", data.error);
 		$("#errorMsg > #error1 #fromJSON").html(data.error);
@@ -86,6 +110,7 @@ function initExtension( data ){
 
 	showBottomLink(data.additionalInfo);
 	activateExtensionLinks();
+	addButtonTracking();
 	
 	// hide loader
 	$( "#loader" ).animate({
@@ -134,11 +159,6 @@ function addSocialIcoLink(el, url){
 	}
 }
 
-function onClickOpenTab(link){
-	console.log("link", link);
-	// chrome.tabs.create({url:link})
-}
-
 function showICO(baseInfo, icoRating, social){
 	$("#domain_name > span > .name").html( naCheck(baseInfo.name) );
 	$("#domain_name > span > .symbol").html( "(" + naCheck(baseInfo.symbol) + ")" );
@@ -153,29 +173,21 @@ function showICO(baseInfo, icoRating, social){
 	$("#telegram_members > .value").html( naCheck(social.telegram_users) );
 	$("#twitter_followers > .value").html( naCheck(social.twitter_followers) );
 
-	// console.log(icoRating);
 
 	$("#ico_rating > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.icorating, 2), "-") );
-	// $("#ico_critic > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.icocritic, 2), "-") );
 	$("#ico_bench > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.icobench, 2), "-") );
-	// $("#cryptorated > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.cryptorated, 2), "-") );
 	$("#ico_bazaar > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.icobazaar, 2), "-") );
 	$("#token_tops > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.tokentops, 2), "-") );
 	$("#fox_ico > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.foxIco, 2), "-") );
 	$("#digrate > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.digrate, 2), "-") );
 	$("#ico_drops > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.icodrops, 2), "-") );
 
-	// ratingSameWidth();
 	setTimeout(ratingSameWidth, 10);
 
 	var total = 100/5; //  100 proc / 5 balu sistema
-	// console.log( icoRating.icobazaar );
-	// console.log( ifNoInt(icoRating.icobazaar*total, 0)+"%" );
 
 	$("#ico_rating > .bar > .activeBar").css( "width", (ifNoInt(icoRating.icorating, 0))*total+"%" );
-	// $("#ico_critic > .bar > .activeBar").css( "width", (ifNoInt(icoRating.icocritic*total, 0))+"%" );
 	$("#ico_bench > .bar > .activeBar").css( "width", (ifNoInt(icoRating.icobench*total, 0))+"%" );
-	// $("#cryptorated > .bar > .activeBar").css( "width", (ifNoInt(icoRating.cryptorated*total, 0))+"%" );
 	$("#ico_bazaar > .bar > .activeBar").css( "width", (ifNoInt(icoRating.icobazaar*total, 0))+"%" );
 	$("#token_tops > .bar > .activeBar").css( "width", (ifNoInt(icoRating.tokentops*total, 0))+"%" );
 	$("#fox_ico > .bar > .activeBar").css( "width", (ifNoInt(icoRating.foxIco*total, 0))+"%" );
@@ -183,9 +195,7 @@ function showICO(baseInfo, icoRating, social){
 	$("#ico_drops > .bar > .activeBar").css( "width", (ifNoInt(icoRating.icodrops*total, 0))+"%" );
 
 	addDetailsBtnLink("#ico_rating > .info > .details_text", icoRating.icoratingLink);
-	// addDetailsBtnLink("#ico_critic > .info > .details_text", icoRating.icocriticLink);
 	addDetailsBtnLink("#ico_bench > .info > .details_text", icoRating.icobenchLink);
-	// addDetailsBtnLink("#cryptorated > .info > .details_text", icoRating.cryptoratedLink);
 	addDetailsBtnLink("#ico_bazaar > .info > .details_text", icoRating.icobazaarLink);
 	addDetailsBtnLink("#token_tops > .info > .details_text", icoRating.tokentopsLink);
 	addDetailsBtnLink("#fox_ico > .info > .details_text", icoRating.foxIcoLink);
@@ -253,12 +263,6 @@ function showTrading(baseInfo, coinMarket){
 
 function showBottomGraph(traffic){
 	$( ".graph_iframe" ).attr("src", graphUrl+extension.domain )
-
-	// $("#estimated_visits > .value").html( traffic.TotalVisits );
-	// $("#time_on_site > .value").html( traffic.TimeOnSite );
-	// $("#page_views > .value").html( traffic.PagesViews );
-	// $("#bounce_rate > .value").html( traffic.BounceRate );
-
 }
 
 function showBottomLink(additionalInfo){
@@ -272,6 +276,7 @@ function unhide(id){
 
 function activateExtensionLinks(){
 	window.addEventListener('click',function(e){
+		// console.log(e.target.id);
 		if( ($(e.target).attr('mailto') != null) && ($(e.target).attr('mailto') != undefined) ){
 			sendEmail( $(e.target).attr('mailto') );
 		} else if(e.target.href!==undefined){
