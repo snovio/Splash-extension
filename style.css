@@ -224,7 +224,10 @@ body {
 	transform: translate(-50%, -50%);
 }
 
-#errorMsg > div{
+#error1 > div{
+	margin-bottom: 17px;
+}
+#error2 > div{
 	margin-bottom: 17px;
 }
 

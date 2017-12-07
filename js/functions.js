@@ -180,7 +180,10 @@ function extractRootDomain(url) {
 }
 
 function thousands(number){
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    // console.log(number);
+    if(number != null){
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 }
 
 function fixed(number, amm){

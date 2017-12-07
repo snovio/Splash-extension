@@ -22,6 +22,7 @@ function init( rootDomain, selectedText ){
 	extension.selected = selectedText;
 	console.log(extension.selected);
 	getExtensionId();
+	// setTimeout(getExtensionId, 5000); // for testing
 }
 
 function getExtensionId(){
@@ -75,11 +76,12 @@ function initExtension( data ){
 		// sendEmail('lalala@ada.com');
 		// sendEmail('lalala@ada.com')
 	} else {
-		console.log("er");
-		$("#errorMsg > #fromJSON").html(data.error);
+		console.log("er", data.error);
+		$("#errorMsg > #error1 #fromJSON").html(data.error);
 		// $("#dataScreen").css("display", "none");
 		$("#contWrap").css("display", "none");
 		$("#errorMsg").css("display", "block");
+		$("#error1").css("display", "block");
 	}
 
 	showBottomLink(data.additionalInfo);
@@ -273,13 +275,17 @@ function activateExtensionLinks(){
 		if( ($(e.target).attr('mailto') != null) && ($(e.target).attr('mailto') != undefined) ){
 			sendEmail( $(e.target).attr('mailto') );
 		} else if(e.target.href!==undefined){
-			chrome.tabs.create({url:e.target.href});
+			activateSimpleClick(e);
 		} else if ( jQuery.inArray("time_tab", e.target.classList) >= 0 ) {
 			$( ".time_tab" ).removeClass( "active_time_tab" )
 			$( e.target ).addClass( "active_time_tab" )
 			priceActionGraph(e.target.id);
 		}
 	})
+}
+
+function activateSimpleClick(e){
+	chrome.tabs.create({url:e.target.href});
 }
 
 
@@ -524,7 +530,7 @@ function getDomainData( rootDomain ){
 	var paramsUrl = $.param( params );
 
 	var url = apiLink+"http://"+rootDomain+"?"+paramsUrl;
-	// console.log(url);
+	console.log("ajax", url);
 
 	$.ajax({
 	    url: url,
@@ -535,22 +541,35 @@ function getDomainData( rootDomain ){
 	        initExtension( data );
 	    },
 	    error: function () {
-	        // $("#status").html("failed");
+			showError2();
 	    }
+	});
+}
+
+function showError2(){
+	$("#contWrap").css("display", "none");
+	$("#errorMsg").css("display", "block");
+	$("#error2").css("display", "block");
+
+	window.addEventListener('click',function(e){
+		if(e.target.href!==undefined){
+			activateSimpleClick(e);
+		}
 	});
 }
 
 // on document ready
 $(function() {
-	// get selected text
 	chrome.tabs.executeScript( { code: "window.getSelection().toString();" }, function(selection) {
-	  	// selection[0]
-	  	chrome.tabs.getSelected(null, function(tab) {
-	  		var selectedText = selection[0];
-	  		if( selection[0].length > 50 ) selectedText = '';
-			init( extractRootDomain(tab.url), selectedText );
-		});    
-	});
+	  	if((selection != null) || (selection != undefined)){
+		  	chrome.tabs.getSelected(null, function(tab) {
+		  		var selectedText = selection[0];
+		  		if( selectedText.length > 50 ) selectedText = '';
 
-	
+				init( extractRootDomain(tab.url), selectedText );
+			});  
+		} else {
+			showError2();
+		}
+	});
 });
