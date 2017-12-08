@@ -180,12 +180,12 @@ body {
 	overflow:hidden;
 	/*height: 115px;*/
 	height: 127px;
-	width:600px;
+	width:610px;
 	/*background-color: #ebf5fe;*/
 }
 
 .graph_iframe {
-	width: 607px;
+	width: 617px;
 	height: 220px;
     margin-top: -63px;
     margin-left: -9px;
@@ -240,7 +240,7 @@ body {
 }
 
 #contWrap{
-	width:600px;
+	width:610px;
 	height:100%;
 	position:absolute;
 	padding: 25px;

@@ -8,9 +8,9 @@ var apiLink = 'http://mvp.daratus.com/ico-extention/index.php?link=';
 var graphUrl = 'https://widget.similarweb.com/traffic/';
 
 var graphInitData = [
-	{btnID: "hour", container:"hourGraph", dataName:"histo60Minutes", timeText:"LAST HOUR", data:{xGridAmm:5}, smoothAmm: 0, type: "init"},
+	{btnID: "hour", container:"hourGraph", dataName:"histo60Minutes", timeText:"LAST HOUR", data:{xGridAmm:5}, smoothAmm: 0, type: "other"},
 	{btnID: "day", container:"dayGraph", dataName:"histo24Hours", timeText:"LAST 24 HOUR", data:{xGridAmm:7}, smoothAmm: 0, type: "other"},
-	{btnID: "week", container:"weekGraph", dataName:"histo1week", timeText:"LAST 7 DAYS", data:{xGridAmm:8}, smoothAmm: 0, type: "other"},
+	{btnID: "week", container:"weekGraph", dataName:"histo1week", timeText:"LAST 7 DAYS", data:{xGridAmm:8}, smoothAmm: 0, type: "init"},
 	{btnID: "month", container:"monthGraph", dataName:"histo1month", timeText:"LAST MONTH", data:{xGridAmm:5}, smoothAmm: 0, type: "other"},
 	{btnID: "3month", container:"3monthGraph", dataName:"histo3months", timeText:"LAST 3 MONTH", data:{xGridAmm:7}, smoothAmm: 0, type: "other"}
 ]
@@ -28,19 +28,16 @@ _gaq.push(['_trackPageview']);
 
 function addButtonTracking(){
 	// Price action graph
-	track("#hour", "price_graph_hour");
-	track("#day", "price_graph_day");
-	track("#week", "price_graph_week");
-	track("#month", "price_graph_month");
-	track("#3month", "price_graph_3month");	
+	setTrack("#hour", "price_graph_hour");
+	setTrack("#day", "price_graph_day");
+	setTrack("#week", "price_graph_week");
+	setTrack("#month", "price_graph_month");
+	setTrack("#3month", "price_graph_3month");
 }
 
-function track(elementName, eventName){
-	$( elementName ).click( function(){
-		_gaq.push(['_trackEvent', eventName, 'clicked']);
-	});	
+function setTrack(elementName, eventName){
+	$( elementName ).attr('track', eventName);
 }
-
 
 function init( rootDomain, selectedText ){
 	// get extension id
@@ -120,18 +117,18 @@ function initExtension( data ){
 
 
 function addSocialLinks(social){
-	addSocialIcoLink(".social > .telegram", social.telegram);
-	addSocialIcoLink(".social > .twitter", social.twitter);
-	addSocialIcoLink(".social > .faceBook", social.faceBook);
-	addSocialIcoLink(".social > .reddit", social.reddit);
-	addSocialIcoLink(".social > .gitHub", social.gitHub);
-	addSocialIcoLink(".social > .bitCoinTalk", social.bitCoinTalk);
+	addSocialIcoLink(".social > .telegram", social.telegram, "social_telegram");
+	addSocialIcoLink(".social > .twitter", social.twitter, "social_twitter");
+	addSocialIcoLink(".social > .faceBook", social.faceBook, "social_faceBook");
+	addSocialIcoLink(".social > .reddit", social.reddit, "social_reddit");
+	addSocialIcoLink(".social > .gitHub", social.gitHub, "social_gitHub");
+	addSocialIcoLink(".social > .bitCoinTalk", social.bitCoinTalk, "social_bitCoinTalk");
 
 	if( (social.blog != null) && (social.blog.search("medium.com") >= 0) ){ 
-		addSocialIcoLink(".social > .medium", social.blog);
+		addSocialIcoLink(".social > .medium", social.blog, "social_blog_medium");
 		$(".social > .blog").addClass("nodisplay");
 	} else {
-		addSocialIcoLink(".social > .blog", social.blog);
+		addSocialIcoLink(".social > .blog", social.blog, "social_blog_blog");
 		$(".social > .medium").addClass("nodisplay");
 	}
 }
@@ -153,10 +150,11 @@ function addMouseEvents(){
 
 
 
-function addSocialIcoLink(el, url){
+function addSocialIcoLink(el, url, trackEventName){
 	if( (url != null) && (url != "") ){
 		$( el+" > a" ).attr("href", url )
 		$( el ).css("order", "1" )
+		setTrack(el+" > a", trackEventName);
 	} else {
 		$( el ).addClass("inactiveSocialIcon");
 	}
@@ -178,14 +176,14 @@ function showICO(baseInfo, icoRating, social){
 
 
 	var ratingsPaths = [ 
-		// elID, val, link
-		['ico_rating', 'icorating', 'icoratingLink'],
-		['ico_bench', 'icobench', 'icobenchLink'],
-		['ico_bazaar', 'icobazaar', 'icobazaarLink'],
-		['token_tops', 'tokentops', 'tokentopsLink'],
-		['fox_ico', 'foxIco', 'foxIcoLink'],
-		['digrate', 'digrate', 'digrateLink'],
-		['ico_drops', 'icodrops', 'icodropsLink']
+		// elID, val, link, trackeventname
+		['ico_rating', 'icorating', 'icoratingLink', 'ratings_icorating'],
+		['ico_bench', 'icobench', 'icobenchLink', 'ratings_icobench'],
+		['ico_bazaar', 'icobazaar', 'icobazaarLink', 'ratings_icobazaar'],
+		['token_tops', 'tokentops', 'tokentopsLink', 'ratings_tokentops'],
+		['fox_ico', 'foxIco', 'foxIcoLink', 'ratings_foxIco'],
+		['digrate', 'digrate', 'digrateLink', 'ratings_digrate'],
+		['ico_drops', 'icodrops', 'icodropsLink', 'ratings_icodrops']
 	]
 
 	displayRating( ratingsPaths, icoRating );
@@ -199,9 +197,10 @@ function displayRating(ratingsPaths, icoRating){
 		var elName = ratingsPaths[i][0];
 		var valName = ratingsPaths[i][1];
 		var urlName = ratingsPaths[i][2];
+		var trackeventname = ratingsPaths[i][3];
 		$("#"+elName+" > .flexRows > .flex > .value").html( ifNull( fixed(icoRating[ valName ], 2), "-") );
 		$("#"+elName+" > .bar > .activeBar").css( "width", (ifNoInt(icoRating[ valName ], 0))*total+"%" );
-		addDetailsBtnLink("#"+elName+" > .info > .details_text", icoRating[ urlName ]);
+		addDetailsBtnLink("#"+elName+" > .info > .details_text", icoRating[ urlName ], trackeventname);
 	}
 }
 
@@ -220,9 +219,10 @@ function ratingsSameWidth(){
 	}
 }
 
-function addDetailsBtnLink(el, url){
+function addDetailsBtnLink(el, url, trackEventName){
 	if( url != null ){
 		$( el+" > a" ).attr("href", url )
+		setTrack(el+" > a", trackEventName);
 	} else {
 		$( el ).addClass("inactiveDetailsBtn");
 	}
@@ -270,6 +270,8 @@ function unhide(id){
 function activateExtensionLinks(){
 	window.addEventListener('click',function(e){
 		// console.log(e.target.id);
+		trackIt(e);
+
 		if( ($(e.target).attr('mailto') != null) && ($(e.target).attr('mailto') != undefined) ){
 			sendEmail( $(e.target).attr('mailto') );
 		} else if(e.target.href!==undefined){
@@ -286,6 +288,13 @@ function activateSimpleClick(e){
 	chrome.tabs.create({url:e.target.href});
 }
 
+function trackIt(e){
+	if( $( e.target ).attr('track') != null ){
+		var trackVal = $( e.target ).attr('track');
+		_gaq.push(['_trackEvent', trackVal, 'clicked']);
+		console.log( "tracked:", trackVal );
+	}
+}
 
 function sendEmail(emailUrl) {
 	var emailUrl = "mailto:"+emailUrl;
@@ -297,7 +306,7 @@ function sendEmail(emailUrl) {
 
 function loadGraph(historicalRates, type){
 	for(var i=0;i<graphInitData.length;i++){
-		if(graphInitData[i].type == type){
+		if(graphInitData[i].type == type){ // load all graphs of some type
 			loadGraphData(graphInitData[i], historicalRates[graphInitData[i].dataName], historicalRates, type);
 		}
 	}
@@ -550,6 +559,7 @@ function showError2(){
 	$("#error2").css("display", "block");
 
 	window.addEventListener('click',function(e){
+		trackIt(e);
 		if(e.target.href!==undefined){
 			activateSimpleClick(e);
 		}
