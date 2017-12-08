@@ -125,17 +125,22 @@ body {
 	order: 5;
 }
 
-/*#social > .soc_icon > a:hover {
-	filter: saturate(800%) hue-rotate(40deg) contrast(200%) brightness(50%);
-	filter: saturate(1000%) hue-rotate(-330deg);
-}*/
+.icon_circle {
+    transition: fill 0.4s;
+}
+
+.icon_circle_stroke {
+    transition: stroke 0.4s;
+}
 
 .social > .soc_icon:hover .icon_circle { 
 	fill: #7e7bfd;
+    transition: fill 0.3s;
 }
 
 .social > .soc_icon:hover .icon_circle_stroke { 
 	stroke: #7e7bfd;
+    transition: stroke 0.3s;
 }
 
 .rateVal {
@@ -303,6 +308,7 @@ body {
     position: relative;
     left: 50%;
     transform: translate(-50%, 0);
+    opacity: 0;
 }
 
 .inactiveSocialIcon {
@@ -540,9 +546,10 @@ a {
 }
 
 /* unvisited link */
-#bottom > div > a:link {
+#bottom > div > a {
     color: #85888c;
     text-decoration: underline;
+    cursor: pointer;
 }
 /* visited link */
 #bottom > div > a:visited {

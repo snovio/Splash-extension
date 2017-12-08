@@ -79,7 +79,6 @@ function initExtension( data ){
 
 	// if ( data.hasOwnProperty("baseInfo") ){
 	if ( data.error == null ){
-		// unhide("#dataScreen");
 
 		appendSocialIcons(data.baseInfo.status);
 		addSocialLinks(data.social);
@@ -102,7 +101,6 @@ function initExtension( data ){
 	} else {
 		console.log("er", data.error);
 		$("#errorMsg > #error1 #fromJSON").html(data.error);
-		// $("#dataScreen").css("display", "none");
 		$("#contWrap").css("display", "none");
 		$("#errorMsg").css("display", "block");
 		$("#error1").css("display", "block");
@@ -142,9 +140,14 @@ function addMouseEvents(){
 	$( ".soc_icon" ).mouseover(function(event) {
 		var name = $( this ).attr("value");
 	  	$( this ).append( '<div class="social_toolbox">'+name+'</div>' );
+	  	// $( this ).addClass('socialFadeIn');
+	  	$( ".social_toolbox"  ).animate({ opacity: 1 }, 400);
 	});
 	$( ".soc_icon" ).mouseout(function() {
 		$( ".social_toolbox" ).remove();
+	  	// $( this +"> .social_toolbox" ).animate({ opacity: 0.0 }, 200, function() {
+			// $( this +"> .social_toolbox" ).remove();
+	  	// });
 	});
 }
 
@@ -174,39 +177,36 @@ function showICO(baseInfo, icoRating, social){
 	$("#twitter_followers > .value").html( naCheck(social.twitter_followers) );
 
 
-	$("#ico_rating > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.icorating, 2), "-") );
-	$("#ico_bench > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.icobench, 2), "-") );
-	$("#ico_bazaar > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.icobazaar, 2), "-") );
-	$("#token_tops > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.tokentops, 2), "-") );
-	$("#fox_ico > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.foxIco, 2), "-") );
-	$("#digrate > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.digrate, 2), "-") );
-	$("#ico_drops > .flexRows > .flex > .value").html( ifNull( fixed(icoRating.icodrops, 2), "-") );
+	var ratingsPaths = [ 
+		// elID, val, link
+		['ico_rating', 'icorating', 'icoratingLink'],
+		['ico_bench', 'icobench', 'icobenchLink'],
+		['ico_bazaar', 'icobazaar', 'icobazaarLink'],
+		['token_tops', 'tokentops', 'tokentopsLink'],
+		['fox_ico', 'foxIco', 'foxIcoLink'],
+		['digrate', 'digrate', 'digrateLink'],
+		['ico_drops', 'icodrops', 'icodropsLink']
+	]
 
-	setTimeout(ratingSameWidth, 10);
-
-	var total = 100/5; //  100 proc / 5 balu sistema
-
-	$("#ico_rating > .bar > .activeBar").css( "width", (ifNoInt(icoRating.icorating, 0))*total+"%" );
-	$("#ico_bench > .bar > .activeBar").css( "width", (ifNoInt(icoRating.icobench*total, 0))+"%" );
-	$("#ico_bazaar > .bar > .activeBar").css( "width", (ifNoInt(icoRating.icobazaar*total, 0))+"%" );
-	$("#token_tops > .bar > .activeBar").css( "width", (ifNoInt(icoRating.tokentops*total, 0))+"%" );
-	$("#fox_ico > .bar > .activeBar").css( "width", (ifNoInt(icoRating.foxIco*total, 0))+"%" );
-	$("#digrate > .bar > .activeBar").css( "width", (ifNoInt(icoRating.digrate*total, 0))+"%" );
-	$("#ico_drops > .bar > .activeBar").css( "width", (ifNoInt(icoRating.icodrops*total, 0))+"%" );
-
-	addDetailsBtnLink("#ico_rating > .info > .details_text", icoRating.icoratingLink);
-	addDetailsBtnLink("#ico_bench > .info > .details_text", icoRating.icobenchLink);
-	addDetailsBtnLink("#ico_bazaar > .info > .details_text", icoRating.icobazaarLink);
-	addDetailsBtnLink("#token_tops > .info > .details_text", icoRating.tokentopsLink);
-	addDetailsBtnLink("#fox_ico > .info > .details_text", icoRating.foxIcoLink);
-	addDetailsBtnLink("#digrate > .info > .details_text", icoRating.digrateLink);
-	addDetailsBtnLink("#ico_drops > .info > .details_text", icoRating.icodropsLink);
-
+	displayRating( ratingsPaths, icoRating );
+	setTimeout(ratingsSameWidth, 10);
 }
 
-function ratingSameWidth(){
+function displayRating(ratingsPaths, icoRating){
+	var total = 100/5; //  100 proc / 5 balu sistema
+
+	for(var i=0; i<ratingsPaths.length; i++){
+		var elName = ratingsPaths[i][0];
+		var valName = ratingsPaths[i][1];
+		var urlName = ratingsPaths[i][2];
+		$("#"+elName+" > .flexRows > .flex > .value").html( ifNull( fixed(icoRating[ valName ], 2), "-") );
+		$("#"+elName+" > .bar > .activeBar").css( "width", (ifNoInt(icoRating[ valName ], 0))*total+"%" );
+		addDetailsBtnLink("#"+elName+" > .info > .details_text", icoRating[ urlName ]);
+	}
+}
+
+function ratingsSameWidth(){
 	var max = 0;
-	// var anyZero = false;
 	$('.rateVal').each( function(index){
 		if(max < $(this).width() ){
 			max = $(this).width();
@@ -218,13 +218,6 @@ function ratingSameWidth(){
 	} else {
 		setTimeout(ratingSameWidth, 10);
 	}
-}
-
-function naCheck(val){
-	if( val == null ){
-		val = "n/a"
-	}
-	return val;
 }
 
 function addDetailsBtnLink(el, url){

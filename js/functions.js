@@ -1,7 +1,140 @@
 
+function extractHostname(url) {
+    var hostname;
+    
+    if (url.indexOf("://") > -1) {
+        hostname = url.split('/')[2];
+    }
+    else {
+        hostname = url.split('/')[0];
+    }
+    hostname = hostname.split(':')[0];
+    hostname = hostname.split('?')[0];
+
+    return hostname;
+}
+
+function extractRootDomain(url) {
+    var domain = extractHostname(url),
+        splitArr = domain.split('.'),
+        arrLen = splitArr.length;
+    if (arrLen > 2) {
+        domain = splitArr[arrLen - 2] + '.' + splitArr[arrLen - 1];
+        if (splitArr[arrLen - 1].length == 2 && splitArr[arrLen - 1].length == 2) {
+            domain = splitArr[arrLen - 3] + '.' + domain;
+        }
+    }
+    return domain;
+}
+
+function naCheck(val){
+    if( val == null ){
+        val = "n/a"
+    }
+    return val;
+}
+
+function thousands(number){
+    // console.log(number);
+    if(number != null){
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+}
+
+function fixed(number, amm){
+    // console.log("fixed", number);
+    if(number != null){
+        if( !isNaN(parseFloat(number)) && isFinite(number) ){ // if ist number
+            // console.log("ans", intNumb.toFixed(amm));
+            // console.log(number);
+            var floatNumb = parseFloat(number);
+            return floatNumb.toFixed(amm);
+        } else {
+            return number;
+        }
+    } else {
+        return number;
+    }
+}
+
+function ifNull(val, replacement){
+    if(val == null){
+        return replacement;
+    } else {
+        return val;
+    }
+}
+
+
+function smartFixed(number, amm){
+    var numbString = (number).toString()
+    var sides = numbString.split(".")
+    if(sides.length > 1){
+        if(sides[1].length > amm){
+            // check ar pirmi iki amm yra nuliai
+            var zerosAmm = 0;
+            for(var i = 0; i<amm; i++){
+                var letter = sides[1].charAt(i);
+                if(letter == "0"){
+                    zerosAmm++;
+                }
+            }
+            if(zerosAmm == amm){
+                // iki amm ribos vien nuliai tai trumpinam iki pirmo realaus skaiciaus
+                var numb = "";
+                for(var i = 0; i<sides[1].length; i++){
+                    var letter = sides[1].charAt(i);
+                    numb += letter;
+                    if(letter != "0"){
+                        var rn = sides[0]+"."+numb;
+                        return parseFloat(rn);
+                    }
+                }
+            } else {
+                // yra skaiciu uz amm ribos, ir ne nuliai, tai trumpinam skaicius iki amm
+                return parseFloat(number.toFixed(amm));
+            }
+        } else {
+            // jei skaiciu po kablelio yra maziau nei amm grazinam reiksme be pap nuliu
+            return  parseFloat(sides[0]+"."+sides[1]);
+        }
+    } else {
+        return number;
+    }
+}
+
+// testing
+// console.log( smartFixed(0, 2) );
+// console.log( smartFixed(0.0, 2) );
+// console.log( smartFixed(1.0, 2) );
+// console.log( smartFixed(5151, 2) );
+// console.log( smartFixed(0.1, 2) );
+// console.log( smartFixed(0.01, 2) );
+// console.log( smartFixed(0.001, 2) );
+// console.log( smartFixed(0.0000, 2) );
+// console.log( smartFixed(1.0000, 2) );
+// console.log( smartFixed(1.0001, 2) );
+// console.log( smartFixed(1.1231251251, 2) );
+// console.log( smartFixed(1.0000125123124, 2) );
+
+
+
+// if number not integer replace to other number
+function ifNoInt(number, replacement){
+    if( !isNaN(parseFloat(number)) && isFinite(number) ){
+        return number;
+    } else {
+        return replacement;
+    }
+}
+
+// smooth polyline
+!function(e,n){"object"==typeof exports&&"undefined"!=typeof module?module.exports=n():"function"==typeof define&&define.amd?define(n):e.smooth=n()}(this,function(){"use strict";function e(e,n){return e[0]=n[0],e[1]=n[1],e}return function(n){var t=[];n.length>0&&t.push(e([0,0],n[0]));for(var o=0;o<n.length-1;o++){var u=n[o],f=n[o+1],r=u[0],i=u[1],h=f[0],s=f[1];t.push([.85*r+.15*h,.85*i+.15*s]),t.push([.15*r+.85*h,.15*i+.85*s])}return n.length>1&&t.push(e([0,0],n[n.length-1])),t}});
+
+
+
+
 function appendSocialIcons(el){
-
-
     var socialEl = $( '.social' );
 
     socialEl.append('<div class="soc_icon telegram" value="Telegram">\
@@ -133,145 +266,4 @@ function appendSocialIcons(el){
                             </svg>\
                         </a>\
                     </div>');
-
-
 }
-
-
-
-
-
-
-function extractHostname(url) {
-    var hostname;
-    //find & remove protocol (http, ftp, etc.) and get hostname
-
-    if (url.indexOf("://") > -1) {
-        hostname = url.split('/')[2];
-    }
-    else {
-        hostname = url.split('/')[0];
-    }
-
-    //find & remove port number
-    hostname = hostname.split(':')[0];
-    //find & remove "?"
-    hostname = hostname.split('?')[0];
-
-    return hostname;
-}
-
-function extractRootDomain(url) {
-    var domain = extractHostname(url),
-        splitArr = domain.split('.'),
-        arrLen = splitArr.length;
-
-    //extracting the root domain here
-    //if there is a subdomain 
-    if (arrLen > 2) {
-        domain = splitArr[arrLen - 2] + '.' + splitArr[arrLen - 1];
-        //check to see if it's using a Country Code Top Level Domain (ccTLD) (i.e. ".me.uk")
-        if (splitArr[arrLen - 1].length == 2 && splitArr[arrLen - 1].length == 2) {
-            //this is using a ccTLD
-            domain = splitArr[arrLen - 3] + '.' + domain;
-        }
-    }
-    return domain;
-}
-
-function thousands(number){
-    // console.log(number);
-    if(number != null){
-        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-}
-
-function fixed(number, amm){
-    console.log("fixed", number);
-    if(number != null){
-        if( !isNaN(parseFloat(number)) && isFinite(number) ){ // if ist number
-            // console.log("ans", intNumb.toFixed(amm));
-            // console.log(number);
-            var floatNumb = parseFloat(number);
-            return floatNumb.toFixed(amm);
-        } else {
-            return number;
-        }
-    } else {
-        return number;
-    }
-}
-
-function ifNull(val, replacement){
-    if(val == null){
-        return replacement;
-    } else {
-        return val;
-    }
-}
-
-
-function smartFixed(number, amm){
-    var numbString = (number).toString()
-    var sides = numbString.split(".")
-    if(sides.length > 1){
-        if(sides[1].length > amm){
-            // check ar pirmi iki amm yra nuliai
-            var zerosAmm = 0;
-            for(var i = 0; i<amm; i++){
-                var letter = sides[1].charAt(i);
-                if(letter == "0"){
-                    zerosAmm++;
-                }
-            }
-            if(zerosAmm == amm){
-                // iki amm ribos vien nuliai tai trumpinam iki pirmo realaus skaiciaus
-                var numb = "";
-                for(var i = 0; i<sides[1].length; i++){
-                    var letter = sides[1].charAt(i);
-                    numb += letter;
-                    if(letter != "0"){
-                        var rn = sides[0]+"."+numb;
-                        return parseFloat(rn);
-                    }
-                }
-            } else {
-                // yra skaiciu uz amm ribos, ir ne nuliai, tai trumpinam skaicius iki amm
-                return parseFloat(number.toFixed(amm));
-            }
-        } else {
-            // jei skaiciu po kablelio yra maziau nei amm grazinam reiksme be pap nuliu
-            return  parseFloat(sides[0]+"."+sides[1]);
-        }
-    } else {
-        return number;
-    }
-}
-
-// testing
-// console.log( smartFixed(0, 2) );
-// console.log( smartFixed(0.0, 2) );
-// console.log( smartFixed(1.0, 2) );
-// console.log( smartFixed(5151, 2) );
-// console.log( smartFixed(0.1, 2) );
-// console.log( smartFixed(0.01, 2) );
-// console.log( smartFixed(0.001, 2) );
-// console.log( smartFixed(0.0000, 2) );
-// console.log( smartFixed(1.0000, 2) );
-// console.log( smartFixed(1.0001, 2) );
-// console.log( smartFixed(1.1231251251, 2) );
-// console.log( smartFixed(1.0000125123124, 2) );
-
-
-
-// if number not integer replace to other number
-function ifNoInt(number, replacement){
-    if( !isNaN(parseFloat(number)) && isFinite(number) ){
-        return number;
-    } else {
-        return replacement;
-    }
-}
-
-// smooth polyline
-!function(e,n){"object"==typeof exports&&"undefined"!=typeof module?module.exports=n():"function"==typeof define&&define.amd?define(n):e.smooth=n()}(this,function(){"use strict";function e(e,n){return e[0]=n[0],e[1]=n[1],e}return function(n){var t=[];n.length>0&&t.push(e([0,0],n[0]));for(var o=0;o<n.length-1;o++){var u=n[o],f=n[o+1],r=u[0],i=u[1],h=f[0],s=f[1];t.push([.85*r+.15*h,.85*i+.15*s]),t.push([.15*r+.85*h,.15*i+.85*s])}return n.length>1&&t.push(e([0,0],n[n.length-1])),t}});
