@@ -167,9 +167,9 @@ function showICO(baseInfo, icoRating, social){
 	$(".description").html( baseInfo.description );
 
 	$("#sale_starts > .date").html( naCheck(baseInfo.tokenSaleStartDate) );
-	$("#sale_starts > .date_text").html( naCheck(baseInfo.tokenSaleStartInWords) );
+//	$("#sale_starts > .date_text").html( naCheck(baseInfo.tokenSaleStartInWords) );
 	$("#sale_ends > .date").html( naCheck(baseInfo.tokenSaleEndDate) );
-	$("#sale_ends > .date_text").html( naCheck(baseInfo.tokenSaleEndInWords) );
+//	$("#sale_ends > .date_text").html( naCheck(baseInfo.tokenSaleEndInWords) );
 
 	$("#telegram_members > .value").html( naCheck(social.telegram_users) );
 	$("#twitter_followers > .value").html( naCheck(social.twitter_followers) );
@@ -177,13 +177,13 @@ function showICO(baseInfo, icoRating, social){
 
 	var ratingsPaths = [ 
 		// elID, val, link, trackeventname
-		['ico_rating', 'icorating', 'icoratingLink', 'ratings_icorating'],
-		['ico_bench', 'icobench', 'icobenchLink', 'ratings_icobench'],
-		['ico_bazaar', 'icobazaar', 'icobazaarLink', 'ratings_icobazaar'],
-		['token_tops', 'tokentops', 'tokentopsLink', 'ratings_tokentops'],
-		['fox_ico', 'foxIco', 'foxIcoLink', 'ratings_foxIco'],
-		['digrate', 'digrate', 'digrateLink', 'ratings_digrate'],
-		['ico_drops', 'icodrops', 'icodropsLink', 'ratings_icodrops']
+		['ico_rating', 'icorating', 'icoratingLink', 'ratings_icorating', 'icoratingText'],
+		['ico_bench', 'icobench', 'icobenchLink', 'ratings_icobench', 'icobenchText'],
+		['ico_bazaar', 'icobazaar', 'icobazaarLink', 'ratings_icobazaar', 'icobazaarText'],
+		['token_tops', 'tokentops', 'tokentopsLink', 'ratings_tokentops', 'tokentopsText'],
+		['fox_ico', 'foxIco', 'foxIcoLink', 'ratings_foxIco', 'foxIcoText'],
+		['digrate', 'digrate', 'digrateLink', 'ratings_digrate', 'digrateText'],
+		['ico_drops', 'icodrops', 'icodropsLink', 'ratings_icodrops', 'icodropsText']
 	]
 
 	displayRating( ratingsPaths, icoRating );
@@ -198,7 +198,8 @@ function displayRating(ratingsPaths, icoRating){
 		var valName = ratingsPaths[i][1];
 		var urlName = ratingsPaths[i][2];
 		var trackeventname = ratingsPaths[i][3];
-		$("#"+elName+" > .flexRows > .flex > .value").html( ifNull( fixed(icoRating[ valName ], 2), "-") );
+		var textName = ratingsPaths[i][4];
+		$("#"+elName+" > .flexRows > .flex > .value").html( ifNull( fixed(icoRating[ textName ], 2), "-") );
 		$("#"+elName+" > .bar > .activeBar").css( "width", (ifNoInt(icoRating[ valName ], 0))*total+"%" );
 		addDetailsBtnLink("#"+elName+" > .info > .details_text", icoRating[ urlName ], trackeventname);
 	}
