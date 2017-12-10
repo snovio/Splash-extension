@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
 
-  "name": "Daratus",
+  "name": "Daratus - Token projects",
   "description": "Productivity tool to get all the essential information about crypto projects in a single click.",
   "version": "0.9.0.22",
   "icons": {
@@ -12,7 +12,7 @@
 
   "browser_action": {
     "default_popup": "popup.html",
-    "default_title": "Daratus"
+    "default_title": "Daratus - Token projects"
   },
   "permissions": [
     "activeTab",
