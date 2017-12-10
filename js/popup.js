@@ -537,7 +537,7 @@ function getDomainData( rootDomain ){
 	var params = {id:extension.id, selectedText:extension.selected};
 	var paramsUrl = $.param( params );
 
-	var url = apiLink+"http://"+rootDomain+"?"+paramsUrl;
+	var url = apiLink+"http://"+rootDomain+"&"+paramsUrl;
 	console.log("ajax", url);
 
 	$.ajax({
