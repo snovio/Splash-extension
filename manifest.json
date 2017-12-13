@@ -1,9 +1,8 @@
 {
   "manifest_version": 2,
-
-  "name": "Daratus - Token projects",
-  "description": "Productivity tool to get all the essential information about crypto projects in a single click.",
-  "version": "0.9.0.22",
+  "name": "Daratus tool for ICO investor, cryptocurrency",
+  "description": "Productivity tool for crypto investors: information about crypto projects, cryptocurrency, crypto and token sale projects, ICO.",
+  "version": "0.9.0.26",
   "icons": {
     "128": "images/icon_128.png",
     "48": "images/icon_48.png",
@@ -12,7 +11,7 @@
 
   "browser_action": {
     "default_popup": "popup.html",
-    "default_title": "Daratus - Token projects"
+    "default_title": "Daratus - tool for ICO investors. Cryptocurrency, crypto, initial coin offering, token sale projects"
   },
   "permissions": [
     "activeTab",
