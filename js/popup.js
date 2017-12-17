@@ -78,8 +78,9 @@ function initExtension( data ){
 	if ( data.error == null ){
 
 		appendSocialIcons(data.baseInfo.status);
-		addSocialLinks(data.social);
-		showBottomGraph(data.traffic);
+		addSocialLinks(data.social); 
+
+		showBottomGraph(data.baseInfo.domain);
 
 		if(data.baseInfo.status == "ICO"){
 			showICO(data.baseInfo, data.icoRating, data.social);
@@ -255,8 +256,9 @@ function showTrading(baseInfo, coinMarket){
 	$("#token_sale_end_date > .value").html( ifNull(baseInfo.tokenSaleEndDate, "n/a") );
 }
 
-function showBottomGraph(traffic){
-	$( ".graph_iframe" ).attr("src", graphUrl+extension.domain )
+function showBottomGraph(domain){
+	// $( ".graph_iframe" ).attr("src", graphUrl+extension.domain )
+	$( ".graph_iframe" ).attr("src", graphUrl+domain )
 }
 
 function showBottomLink(additionalInfo){
