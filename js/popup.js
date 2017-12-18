@@ -311,6 +311,9 @@ function loadGraph(historicalRates, type){
 	for(var i=0;i<graphInitData.length;i++){
 		if(graphInitData[i].type == type){ // load all graphs of some type
 			loadGraphData(graphInitData[i], historicalRates[graphInitData[i].dataName], historicalRates, type);
+			if(type == 'init'){
+				$('#'+graphInitData[i].container).css("display", "block");
+			}
 		}
 	}
 }
@@ -526,7 +529,7 @@ function priceActionGraph(type){
 	// console.log("priceActionGraph", type);
 
 	for(var i=0;i<graphInitData.length;i++){
-		$("#"+graphInitData[i].container).css("display", "none")
+		$("#"+graphInitData[i].container).css("display", "none");
 		if(graphInitData[i].btnID == type){
 			$("#"+graphInitData[i].container).css("display", "inline")
 		}
